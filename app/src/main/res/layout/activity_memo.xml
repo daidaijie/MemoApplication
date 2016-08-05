@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.daidaijie.memoapplication.MemoActivity">
+
+    <android.support.v7.widget.Toolbar
+        app:titleTextColor="@android:color/white"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:clipToPadding="true"
+        android:fitsSystemWindows="true"
+        android:gravity="center_vertical"
+        android:theme="@style/AppTheme.PopupOverlay">
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/menoTitleInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar">
+
+        <EditText
+            android:id="@+id/menoTitleEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入备忘录标题"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <EditText
+        android:id="@+id/menoContentEdidText"
+        android:gravity="top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/saveButton"
+        android:layout_below="@+id/menoTitleInputLayout"
+        android:hint="请输入你要记住的信息"/>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="保存"/>
+</RelativeLayout>
