@@ -37,7 +37,7 @@ public class MemoActivity extends BaseActivity {
         ButterKnife.bind(this);
 
 
-        mToolbar.setTitle("编辑备忘录");
+        mToolbar.setTitle("编辑备忘录\ue40a\uE40A\uE40A");
 
         Intent intent = getIntent();
         mode = intent.getIntExtra("mode", 0);
@@ -58,12 +58,12 @@ public class MemoActivity extends BaseActivity {
             public void onClick(View v) {
                 String title = mMenoTitleEditText.getText().toString();
                 if (title.trim().isEmpty()) {
-                    Toast.makeText(MemoActivity.this, "标题不能为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MemoActivity.this, "\ue059标题不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 String content = mMenoContentEdidText.getText().toString();
                 if (content.trim().isEmpty()) {
-                    Toast.makeText(MemoActivity.this, "内容不能为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MemoActivity.this, "\uE059内容不能为空", Toast.LENGTH_SHORT).show();
                 }
                 mMenoBean.setTitle(title);
                 mMenoBean.setContent(content);
@@ -77,7 +77,7 @@ public class MemoActivity extends BaseActivity {
                     mode = 1;
                     pos = MenoModel.getInstance().mMenoBeen.size() - 1;
                 }
-                Toast.makeText(MemoActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MemoActivity.this, "\ue405保存成功", Toast.LENGTH_SHORT).show();
             }
         });
 

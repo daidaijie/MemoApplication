@@ -30,7 +30,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mToolbar.setTitle("备忘录");
+        mToolbar.setTitle("备忘录\ue412\uE412\uE412");
         setSupportActionBar(mToolbar);
 
         mMenoModel = MenoModel.getInstance();
