@@ -44,6 +44,7 @@ public class MainActivity extends BaseActivity {
         mMenoAdapter.setmOnItemClickLitener(new MenoAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
+                position = mMenoModel.mMenoBeen.size() - position - 1;
                 Intent intent = new Intent(MainActivity.this, MemoActivity.class);
                 intent.putExtra("memo", mMenoModel.mMenoBeen.get(position));
                 intent.putExtra("mode", 1);
@@ -52,13 +53,15 @@ public class MainActivity extends BaseActivity {
             }
 
             @Override
-            public void onItemLongClick(View view, final int position) {
+            public void onItemLongClick(View view, int position) {
+                position = mMenoModel.mMenoBeen.size() - position - 1;
                 String[] infos = {"删除"};
+                final int finalPosition = position;
                 AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
                         .setItems(infos, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                mMenoModel.removeByPos(position);
+                                mMenoModel.removeByPos(finalPosition);
                                 mMenoAdapter.notifyDataSetChanged();
                             }
                         }).create();
