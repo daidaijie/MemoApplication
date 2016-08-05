@@ -32,7 +32,6 @@ public class MenoAdapter extends RecyclerView.Adapter<MenoAdapter.ViewHolder> {
     //设置Item点击回调接口
     public interface OnItemClickLitener {
         void onItemClick(View view, int position);
-
         void onItemLongClick(View view, int position);
     }
 
