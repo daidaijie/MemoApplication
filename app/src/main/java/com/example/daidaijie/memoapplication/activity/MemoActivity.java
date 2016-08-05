@@ -1,4 +1,4 @@
-package com.example.daidaijie.memoapplication;
+package com.example.daidaijie.memoapplication.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.daidaijie.memoapplication.R;
+import com.example.daidaijie.memoapplication.bean.MenoBean;
+import com.example.daidaijie.memoapplication.model.MenoModel;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package com.example.daidaijie.memoapplication;
+package com.example.daidaijie.memoapplication.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.daidaijie.memoapplication.R;
+import com.example.daidaijie.memoapplication.bean.MenoBean;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.daidaijie.memoapplication;
+package com.example.daidaijie.memoapplication.activity;
 
 import android.content.Context;
 import android.os.Bundle;

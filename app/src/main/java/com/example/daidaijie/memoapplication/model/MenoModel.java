@@ -1,8 +1,10 @@
-package com.example.daidaijie.memoapplication;
+package com.example.daidaijie.memoapplication.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.daidaijie.memoapplication.App;
+import com.example.daidaijie.memoapplication.bean.MenoBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

@@ -1,4 +1,4 @@
-package com.example.daidaijie.memoapplication;
+package com.example.daidaijie.memoapplication.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.example.daidaijie.memoapplication.R;
+import com.example.daidaijie.memoapplication.adapter.MenoAdapter;
+import com.example.daidaijie.memoapplication.model.MenoModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

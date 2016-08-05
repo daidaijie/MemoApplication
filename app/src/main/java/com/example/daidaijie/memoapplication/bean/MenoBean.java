@@ -1,4 +1,4 @@
-package com.example.daidaijie.memoapplication;
+package com.example.daidaijie.memoapplication.bean;
 
 import java.io.Serializable;
 import java.util.Calendar;
