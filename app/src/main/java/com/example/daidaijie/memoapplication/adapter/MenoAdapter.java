@@ -32,6 +32,7 @@ public class MenoAdapter extends RecyclerView.Adapter<MenoAdapter.ViewHolder> {
     //设置Item点击回调接口
     public interface OnItemClickLitener {
         void onItemClick(View view, int position);
+
         void onItemLongClick(View view, int position);
     }
 
@@ -50,7 +51,7 @@ public class MenoAdapter extends RecyclerView.Adapter<MenoAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        MenoBean menoBean = mMenoBeans.get(position);
+        MenoBean menoBean = mMenoBeans.get(mMenoBeans.size() - position - 1);
         holder.mTitleTextView.setText(menoBean.getTitle());
         holder.mTimeTextView.setText("创建时间　　: " + menoBean.getCreateTimeString());
         if (menoBean.getChangeTimeString() != null) {
