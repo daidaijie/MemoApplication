@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
+apply plugin: 'realm-android'
+
 
 android {
     compileSdkVersion 23
@@ -29,4 +31,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     compile 'com.github.nekocode:Emojix:1.1'
+    compile 'io.realm:android-adapters:1.2.1'
 }

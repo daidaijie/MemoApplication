@@ -11,63 +11,50 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmResults;
+
 /**
  * Created by daidaijie on 2016/8/4.
  */
 public class MenoModel {
 
     private static MenoModel ourInstance = new MenoModel();
-    public List<MenoBean> mMenoBeen;
-    private Gson mGson;
-
-    private Context mContext;
-    private static final String MEMO = "MenoBeen";
-    private static final String TAG_BEEN = "App";
 
     public static MenoModel getInstance() {
         return ourInstance;
     }
 
     private MenoModel() {
-        mContext = App.getContext();
-        mGson = new Gson();
-        init();
     }
 
-    public void init() {
-        SharedPreferences sharedPreferences = mContext.
-                getSharedPreferences(TAG_BEEN, Context.MODE_PRIVATE);
-        String gsonString = sharedPreferences.getString(MEMO, "");
-
-        if (gsonString.isEmpty()) {
-            mMenoBeen = new ArrayList<>();
-            return;
-        }
-        mMenoBeen = mGson.fromJson(gsonString, new TypeToken<List<MenoBean>>() {
-        }.getType());
+    public RealmResults<MenoBean> getmMenoBeen(Realm realm) {
+        RealmResults<MenoBean> mMenoBeen = realm.where(MenoBean.class).findAll();
+        return mMenoBeen;
     }
 
-    public void removeByPos(int position) {
-        mMenoBeen.remove(position);
-        save();
+    public void removeByPos(Realm realm, String uuid) {
+        final MenoBean menoBean = realm.where(MenoBean.class).equalTo("mUUID", uuid).findFirst();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                menoBean.deleteFromRealm();
+            }
+        });
     }
 
-    public void addByPos(MenoBean bean) {
-        mMenoBeen.add(bean);
-        save();
+    public void updateOrCopy(Realm realm, final MenoBean bean) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(bean);
+            }
+        });
     }
 
-    public void changeByPos(MenoBean bean, int pos) {
-        mMenoBeen.set(pos, bean);
-        save();
+    public MenoBean getMenoBean(Realm realm, String uuid) {
+        return realm.where(MenoBean.class).equalTo("mUUID", uuid).findFirst();
     }
 
-    private void save() {
-        SharedPreferences sharedPreferences = mContext.
-                getSharedPreferences(TAG_BEEN, Context.MODE_PRIVATE);
-        String jsonString = mGson.toJson(mMenoBeen);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(MEMO, jsonString);
-        editor.commit();
-    }
 }

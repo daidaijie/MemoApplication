@@ -1,6 +1,7 @@
 package com.example.daidaijie.memoapplication.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,19 +16,21 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
 
 /**
  * Created by daidaijie on 2016/8/4.
  */
-public class MenoAdapter extends RecyclerView.Adapter<MenoAdapter.ViewHolder> {
+public class MenoAdapter extends RealmRecyclerViewAdapter<MenoBean, MenoAdapter.ViewHolder> {
 
-    private Activity mActivity;
-    private List<MenoBean> mMenoBeans;
+    private final Activity mActivity;
 
-    public MenoAdapter(Activity activity, List<MenoBean> menoBeen) {
-        mActivity = activity;
-        mMenoBeans = menoBeen;
+    public MenoAdapter(Activity activity, OrderedRealmCollection<MenoBean> data) {
+        super(activity, data, true);
+        this.mActivity = activity;
     }
+
 
     //设置Item点击回调接口
     public interface OnItemClickLitener {
@@ -51,7 +54,7 @@ public class MenoAdapter extends RecyclerView.Adapter<MenoAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        MenoBean menoBean = mMenoBeans.get(mMenoBeans.size() - position - 1);
+        MenoBean menoBean = getData().get(position);
         holder.mTitleTextView.setText(menoBean.getTitle());
         holder.mTimeTextView.setText("创建时间　　: " + menoBean.getCreateTimeString());
         if (menoBean.getChangeTimeString() != null) {
@@ -75,10 +78,6 @@ public class MenoAdapter extends RecyclerView.Adapter<MenoAdapter.ViewHolder> {
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return mMenoBeans.size();
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.titleTextView)

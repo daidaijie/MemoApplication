@@ -2,19 +2,38 @@ package com.example.daidaijie.memoapplication.bean;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.UUID;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by daidaijie on 2016/8/4.
  */
-public class MenoBean implements Serializable {
+public class MenoBean extends RealmObject implements Serializable {
+
+    @PrimaryKey
+    private String mUUID;
+
+    private long createTime;
 
     private String title;
 
     private String content;
 
-    private long createTime;
-
     private long changeTime;
+
+    public MenoBean() {
+        mUUID = UUID.randomUUID().toString();
+    }
+
+    public String getUUID() {
+        return mUUID;
+    }
+
+    public void setUUID(String UUID) {
+        mUUID = UUID;
+    }
 
     public String getTitle() {
         return title;
@@ -70,4 +89,6 @@ public class MenoBean implements Serializable {
                 calendar.get(Calendar.SECOND)
         );
     }
+
+
 }
