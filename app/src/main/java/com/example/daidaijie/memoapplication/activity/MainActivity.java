@@ -19,7 +19,6 @@ import com.example.daidaijie.memoapplication.model.MenoModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 public class MainActivity extends BaseActivity {
@@ -33,7 +32,11 @@ public class MainActivity extends BaseActivity {
     private MenoModel mMenoModel;
     private Realm mRealm;
     private RealmResults<MenoBean> mMenoBeen;
-    private RealmChangeListener mChangeListener;
+
+    private int editPosition;
+
+    private static final int REQUEST_CREATE = 200;
+    private static final int REQUEST_EDIT = 201;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,8 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = MemoActivity.getIntent(MainActivity.this, mMenoBeen.get(position).getUUID());
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_EDIT);
+                editPosition = position;
             }
 
             @Override
@@ -73,17 +77,6 @@ public class MainActivity extends BaseActivity {
             }
         });
         mRecycleView.setAdapter(mMenoAdapter);
-
-        mChangeListener = new RealmChangeListener<RealmResults<MenoBean>>() {
-            @Override
-            public void onChange(RealmResults<MenoBean> element) {
-                int position = mMenoBeen.indexOf(element.first());
-                mMenoAdapter.notifyItemChanged(position);
-                mRecycleView.scrollToPosition(position);
-            }
-        };
-
-        mMenoBeen.addChangeListener(mChangeListener);
     }
 
     @Override
@@ -97,16 +90,29 @@ public class MainActivity extends BaseActivity {
         int id = item.getItemId();
         if (id == R.id.addMemo) {
             Intent intent = MemoActivity.getIntent(this);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_CREATE);
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_CREATE) {
+                mRecycleView.scrollToPosition(0);
+                mMenoAdapter.notifyDataSetChanged();
+            }
+        } else {
+            if (requestCode == REQUEST_EDIT) {
+                mMenoAdapter.notifyItemChanged(editPosition);
+            }
+        }
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mMenoBeen.removeChangeListener(mChangeListener);
         mRealm.close();
     }
 }

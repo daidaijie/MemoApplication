@@ -102,8 +102,11 @@ public class MemoActivity extends BaseActivity {
                     mMode = MODE_EDIT;
                 }
                 Toast.makeText(MemoActivity.this, "\ue405保存成功", Toast.LENGTH_SHORT).show();
+                setResult(RESULT_OK);
             }
         });
+
+        setResult(RESULT_CANCELED);
 
     }
 
