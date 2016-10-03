@@ -45,11 +45,11 @@ public class MainActivity extends BaseActivity {
         mToolbar.setTitle("备忘录\ue412\uE412\uE412");
         setSupportActionBar(mToolbar);
 
-        mMenoModel = MenoModel.getInstance();
-        mMenoBeen = mMenoModel.getmMenoBeen(mRealm);
+        mMenoModel = new MenoModel(mRealm);
+        mMenoBeen = mMenoModel.getmMenoBeen();
 
         mMenoAdapter = new MenoAdapter(this, mMenoBeen);
-        mRecycleView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+        mRecycleView.setLayoutManager(new LinearLayoutManager(this));
 
         mMenoAdapter.setmOnItemClickLitener(new MenoAdapter.OnItemClickLitener() {
             @Override
@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity {
                         .setItems(infos, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                mMenoModel.removeByPos(mRealm, mMenoBeen.get(position).getUUID());
+                                mMenoModel.removeByPos(mMenoBeen.get(position).getUUID());
                             }
                         }).create();
                 dialog.show();
@@ -74,10 +74,12 @@ public class MainActivity extends BaseActivity {
         });
         mRecycleView.setAdapter(mMenoAdapter);
 
-        mChangeListener = new RealmChangeListener() {
+        mChangeListener = new RealmChangeListener<RealmResults<MenoBean>>() {
             @Override
-            public void onChange(Object element) {
-                mMenoAdapter.notifyDataSetChanged();
+            public void onChange(RealmResults<MenoBean> element) {
+                int position = mMenoBeen.indexOf(element.first());
+                mMenoAdapter.notifyItemChanged(position);
+                mRecycleView.scrollToPosition(position);
             }
         };
 

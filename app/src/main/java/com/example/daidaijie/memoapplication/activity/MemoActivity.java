@@ -45,12 +45,15 @@ public class MemoActivity extends BaseActivity {
     public static final int MODE_EDIT = 1;
     public static final int MODE_CREATE = 0;
 
+    private MenoModel mMenoModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memo);
         ButterKnife.bind(this);
         mRealm = Realm.getDefaultInstance();
+        mMenoModel = new MenoModel(mRealm);
 
         mMode = getIntent().getIntExtra(EXTRA_MODE, 0);
         uuid = getIntent().getStringExtra(EXTRA_UUID);
@@ -58,7 +61,7 @@ public class MemoActivity extends BaseActivity {
         mToolbar.setTitle("编辑备忘录\ue40a\uE40A\uE40A");
 
         if (mMode == MODE_EDIT) {
-            mMenoBean = MenoModel.getInstance().getMenoBean(mRealm, uuid);
+            mMenoBean = mMenoModel.getMenoBean(uuid);
             mMenoTitleEditText.setText(mMenoBean.getTitle());
             mMenoContentEdidText.setText(mMenoBean.getContent());
         } else {
@@ -83,7 +86,7 @@ public class MemoActivity extends BaseActivity {
                     mRealm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
-                            MenoBean menoBean = MenoModel.getInstance().getMenoBean(realm, uuid);
+                            MenoBean menoBean = mMenoModel.getMenoBean(uuid);
                             menoBean.setTitle(title);
                             menoBean.setContent(content);
                             menoBean.setChangeTime(new Date().getTime());
@@ -94,7 +97,7 @@ public class MemoActivity extends BaseActivity {
                     mMenoBean.setContent(content);
                     mMenoBean.setCreateTime(new Date().getTime());
                     mMenoBean.setChangeTime(new Date().getTime());
-                    MenoModel.getInstance().updateOrCopy(mRealm, mMenoBean);
+                    mMenoModel.updateOrCopy(mMenoBean);
                     uuid = mMenoBean.getUUID();
                     mMode = MODE_EDIT;
                 }
